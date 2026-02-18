@@ -31,8 +31,15 @@
   * Toggleing the Slidebar using useSelector. [Subscribe to the specific protion of your store instead of subscribe whole store.]
   * Create buttons 
   * fetch youtube most popular video api appending your own api key
-  * 
-  -------------------------------------------
+  * Create Video Container and Video Card with mapping the data.
+  * Customize the api to show more results as default is set to 5 only.
+  * We can customize region also for the api.
+  * Install react router dom, npm i react-router-dom
+    ** In App component create brower createBrowerRouter specify path, element and children.
+  * Create a WatchPage
+  * Use Outlet in Body to dynamicly change the rendering of MainContainer to WatchPage.
+  * Link the VideoCards to re-direct to WatchPage with specific video id
+  -------------------------------------------------------
 # Structure
 { + Head
   + Body
@@ -42,6 +49,6 @@
         + ButtonList
         + VideoContainer
            + VideoCard
-
+    + WatchPage
 
 }
