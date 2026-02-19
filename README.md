@@ -39,6 +39,10 @@
   * Create a WatchPage
   * Use Outlet in Body to dynamicly change the rendering of MainContainer to WatchPage.
   * Link the VideoCards to re-direct to WatchPage with specific video id
+  * In WatchPage, close the Slidebar on opening the watchpage.
+    ** Using youTube embbeded iframe for rendering video in it.
+    ** customize video link with searchParam value for each video.
+    
   -------------------------------------------------------
 # Structure
 { + Head
