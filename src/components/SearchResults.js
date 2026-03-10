@@ -16,7 +16,10 @@ const SearchResults = () => {
 
   // Function to fetch search results from the API
   const getSearchResults = async () => {
-    const data = await fetch(YOUTUBE_SEARCH_RESULTS_API + query);
+    const data = await fetch(
+      "https://corsproxy.io/?" +
+        encodeURIComponent(YOUTUBE_SEARCH_RESULTS_API + query),
+    );
     const json = await data.json();
     setVideos(json.items);
   };
@@ -27,7 +30,7 @@ const SearchResults = () => {
     // The Link component uses the video ID from the search results to construct the URL for the WatchPage, allowing users to click on a video and view its details on the WatchPage.
     <div className="flex flex-wrap">
       {videos.map((video) => (
-        <Link key={video.id.videoId} to={"/watch?v=" + video.id.videoId}> 
+        <Link key={video.id.videoId} to={"/watch?v=" + video.id.videoId}>
           <VideoCard info={video} />
         </Link>
       ))}
