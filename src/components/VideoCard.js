@@ -3,10 +3,10 @@ import { useDispatch } from "react-redux";
 import { setSelectedVideo } from "../utils/appSlice";
 
 const VideoCard = ({ info }) => {
-  console.log(info);
+  //console.log(info);
   const dispatch = useDispatch();
-  const { snippet, statistics } = info;
-  const { channelTitle, title, thumbnails } = snippet;
+  const { snippet, statistics } = info || {};
+  const { channelTitle, title, thumbnails } = snippet || {};
 
   const handleClick = () => {
     dispatch(setSelectedVideo(info)); // Dispatch the selected video to the Redux store
@@ -16,13 +16,13 @@ const VideoCard = ({ info }) => {
     <div
       className="p-2 m-2 w-72 h-[320px] 
         shadow-lg cursor-pointer
-        flex flex-col hover:shadow-2xl rounded-xl pverflow-hidden"
+        flex flex-col hover:shadow-2xl rounded-xl overflow-hidden"
       onClick={handleClick}
     >
       <img
         className="rounded-xl w-full h-40 object-cover"
         alt="thumbnail"
-        src={thumbnails.medium.url}
+        src={thumbnails?.medium?.url}
       />
       <div className="flex-1 flex flex-col justify-between mt-2 overflow-hidden">
         <div>
@@ -30,7 +30,7 @@ const VideoCard = ({ info }) => {
           <p className="text-sm text-gray-600 py-1 truncate">{channelTitle}</p>
         </div>
         <p className="text-sm text-gray-600 truncate">
-          {statistics.viewCount} views
+          {statistics?.viewCount && statistics.viewCount + " views"}
         </p>
       </div>
     </div>

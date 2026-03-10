@@ -42,7 +42,13 @@
   * In WatchPage, close the Slidebar on opening the watchpage.
     ** Using youTube embbeded iframe for rendering video in it.
     ** customize video link with searchParam value for each video.
-    
+ 
+# Search
+   * Debouncing with 200s
+     ** if difference between 2 key strokes is <200ms  - DECLINE API call.
+     ** >200ms make an API call.
+
+  
   -------------------------------------------------------
 # Structure
 { + Head

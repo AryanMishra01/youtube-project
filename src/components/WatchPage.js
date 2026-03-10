@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { closeMenu } from "../utils/appSlice";
 import { useSearchParams } from "react-router-dom";
 import { YOUTUBE_VIDEO_DETAILS_API } from "../utils/constants";
+import  CommentsContainer from "./CommentsContainer";
 
 const WatchPage = () => {
   const dispatch = useDispatch();
@@ -42,6 +43,7 @@ const WatchPage = () => {
   } = videoData.statistics || {};
 
   return (
+    <div className="flex flex-col">
     <div className="px-4 flex">
       <div className="w-full max-w-[1200px]">
         <iframe
@@ -78,6 +80,8 @@ const WatchPage = () => {
           {description}
         </p>
       </div>
+    </div>
+    <CommentsContainer />
     </div>
   );
 };
