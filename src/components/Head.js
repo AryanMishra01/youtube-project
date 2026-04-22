@@ -1,63 +1,18 @@
 import React from "react";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { toggleMenu } from "../utils/appSlice";
-import { YOUTUBE_SEARCH_API } from "../utils/constants";
-import { useSelector, useDispatch } from "react-redux";
-import { cacheResults } from "../utils/searchSlice";
+import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
 const Head = () => {
   const [searchQuery, setSearchQuery] = useState("");
-  const [suggestions, setSuggestions] = useState([]);
-  const [showSuggestions, setShowSuggestions] = useState(false);
-  const searchCache = useSelector((store) => store.search);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const handleSearch = () => {
-    if (!searchQuery) return;
-    navigate("/results?search_query=" + searchQuery);
-  };
-
-  const handleSuggestionClick = (query) => {
-    setSearchQuery(query); // update search input
-    setShowSuggestions(false); // hide suggestions dropdown
-    navigate("/results?search_query=" + query); // go to results page
-  };
-  // useEffect to fetch search suggestions whenever searchQuery changes
-  // Debouncing the API call to avoid excessive requests while typing
-  // The API call will be made 200ms after the user stops typing
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      if (searchCache[searchQuery]) {
-        setSuggestions(searchCache[searchQuery]);
-      } else {
-        getSearchSuggestions();
-      }
-    }, 200);
-    return () => clearTimeout(timer);
-  }, [searchQuery]);
-
-  // Function to fetch search suggestions from the API
-  const getSearchSuggestions = async () => {
-    try {
-      const response = await fetch(
-        "https://corsproxy.io/?" +
-          encodeURIComponent(YOUTUBE_SEARCH_API + searchQuery),
-      );
-
-      const json = await response.json();
-
-      setSuggestions(json[1]);
-
-      dispatch(
-        cacheResults({
-          [searchQuery]: json[1],
-        }),
-      );
-    } catch (error) {
-      console.error("Suggestion fetch error:", error);
-    }
+    const trimmedQuery = searchQuery.trim();
+    if (!trimmedQuery) return;
+    navigate("/results?search_query=" + encodeURIComponent(trimmedQuery));
   };
 
   const toggleMenuHandler = () => {
@@ -88,27 +43,10 @@ const Head = () => {
             placeholder="Search"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            onFocus={() => setShowSuggestions(true)}
-            onBlur={() => setShowSuggestions(false)}
             onKeyDown={(e) => {
               if (e.key === "Enter") handleSearch();
             }}
           />
-          {showSuggestions && (
-            <div className="absolute top-12 left-0 w-full bg-white shadow-lg rounded-xl border border-gray-20">
-              <ul>
-                {suggestions.map((s) => (
-                  <li
-                    key={s}
-                    onMouseDown={() => handleSuggestionClick(s)}
-                    className="py-2 px-4 hover:bg-gray-100 cursor-pointer flex items-center gap-2"
-                  >
-                    🔍 {s}
-                  </li>
-                ))}
-              </ul>
-            </div>
-          )}
         </div>
         <div>
           <button
