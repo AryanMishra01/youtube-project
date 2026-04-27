@@ -52,7 +52,7 @@ const VideoContainer = () => {
 
       {isLoading && (
         <div className="flex justify-center items-center p-12">
-          <div className="w-12 h-12 border-4 border-gray-300 border-t-blue-500 rounded-full animate-spin"></div>
+          <div className="w-20 h-20 border-4 border-gray-300 border-t-blue-500 rounded-full animate-spin"></div>
         </div>
       )}
       {error && <div className="p-5 text-red-600">{error}</div>}
