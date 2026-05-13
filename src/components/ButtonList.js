@@ -13,11 +13,15 @@ const ButtonList = ({ onCategorySelect }) => {
     "Comedy",
   ];
   return (
-    <div className="flex">
-      {names.map((value) => (
-        <Button key={value} name={value} onClick={onCategorySelect} />
-      ))}
-    </div>
+    <nav aria-label="Video categories">
+      <ul className="flex">
+        {names.map((value) => (
+          <li key={value}>
+            <Button name={value} onClick={onCategorySelect} />
+          </li>
+        ))}
+      </ul>
+    </nav>
   );
 };
 export default ButtonList;

@@ -1,0 +1,33 @@
+{
+  "hooks": {
+    "pre-commit": {
+      "description": "Run accessibility audits and linting before commit",
+      "stages": [
+        {
+          "name": "accessibility-audit",
+          "description": "Check modified React components for accessibility violations",
+          "command": "npm run a11y:check -- --changed-files-only",
+          "errorMessage": "Accessibility issues found. Run 'npm run a11y:fix' to auto-fix or review with '/Accessibility Audit' prompt.",
+          "failOnError": false,
+          "skipOnMissingCommand": true
+        },
+        {
+          "name": "lint",
+          "description": "Run ESLint with accessibility rules",
+          "command": "npm run lint -- --fix",
+          "errorMessage": "Linting failed. Review and fix manually.",
+          "failOnError": false,
+          "skipOnMissingCommand": true
+        },
+        {
+          "name": "format",
+          "description": "Format code with Prettier",
+          "command": "npm run format -- --write",
+          "errorMessage": "Formatting failed.",
+          "failOnError": false,
+          "skipOnMissingCommand": true
+        }
+      ]
+    }
+  }
+}

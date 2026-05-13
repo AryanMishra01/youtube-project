@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { VIDEO_CATEGORIES, YOUTUBE_VIDEOS_API } from "../utils/constants";
 import VideoCard from "./VideoCard";
-import { Link } from "react-router-dom";
 import ButtonList from "./ButtonList";
 
 const VideoContainer = () => {
@@ -51,18 +50,25 @@ const VideoContainer = () => {
       <ButtonList onCategorySelect={setSelectedCategory} />
 
       {isLoading && (
-        <div className="flex justify-center items-center p-12">
+        <div 
+          className="flex justify-center items-center p-12" 
+          aria-live="polite" 
+          aria-busy="true"
+        >
           <div className="w-20 h-20 border-4 border-gray-300 border-t-blue-500 rounded-full animate-spin"></div>
+          <span className="sr-only">Loading videos...</span>
         </div>
       )}
-      {error && <div className="p-5 text-red-600">{error}</div>}
-      <div className="flex flex-wrap">
+      {error && (
+        <div className="p-5 text-red-600" role="alert">
+          {error}
+        </div>
+      )}
+      <main className="flex flex-wrap" aria-label="Video grid" aria-live="polite" aria-atomic="false">
         {videos.map((video) => (
-          <Link key={video.id} to={"/watch?v=" + video.id}>
-            <VideoCard info={video} />{" "}
-          </Link>
+          <VideoCard key={video.id} info={video} />
         ))}
-      </div>
+      </main>
     </>
   );
 };

@@ -55,22 +55,33 @@ const SearchResults = () => {
   };
 
   return (
-    <div className="flex flex-wrap">
+    <main className="flex flex-wrap" aria-label="Search results">
       {isLoading && (
-        <div className="w-full flex justify-center items-center p-12">
+        <div className="w-full flex justify-center items-center p-12" aria-live="polite" aria-busy="true">
           <div className="w-20 h-20 border-4 border-gray-300 border-t-blue-500 rounded-full animate-spin"></div>
+          <span className="sr-only">Loading search results...</span>
         </div>
       )}
-      {error && <div className="w-full p-4 text-red-600">{error}</div>}
+      {error && (
+        <div className="w-full p-4 text-red-600" role="alert">
+          {error}
+        </div>
+      )}
       {!isLoading && !error && videos.length === 0 && query && (
-        <div className="w-full p-4">No videos found.</div>
+        <div className="w-full p-4" role="status" aria-live="polite">
+          No videos found.
+        </div>
       )}
       {videos.map((video) => (
-        <Link key={video.id.videoId} to={"/watch?v=" + video.id.videoId}>
+        <Link
+          key={video.id.videoId}
+          to={"/watch?v=" + video.id.videoId}
+          className="focus:outline-none focus:ring-2 focus:ring-blue-500 rounded-xl"
+        >
           <VideoCard info={video} />
         </Link>
       ))}
-    </div>
+    </main>
   );
 };
 

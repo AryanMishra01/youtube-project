@@ -50,18 +50,32 @@ const CommentsContainer = () => {
   };
 
   return (
-    <div className="w-full max-w-[1200px] p-5">
-      <h1 className="text-2xl font-bold">Comments:</h1>
+    <section className="w-full max-w-[1200px] p-5" aria-labelledby="comments-heading">
+      <h2 id="comments-heading" className="text-2xl font-bold">Comments</h2>
 
-      {isLoading && <p className="py-2">Loading comments...</p>}
-      {error && <p className="text-red-600 py-2">{error}</p>}
-      {!isLoading && !error && comments.length === 0 && (
-        <p className="py-2">No comments available.</p>
+      {isLoading && (
+        <p role="status" aria-live="polite" className="py-2">
+          Loading comments...
+        </p>
       )}
-      {comments.map((comment) => (
-        <Comment key={comment.id} data={comment} />
-      ))}
-    </div>
+      {error && (
+        <p role="alert" className="text-red-600 py-2">
+          {error}
+        </p>
+      )}
+      {!isLoading && !error && comments.length === 0 && (
+        <p role="status" aria-live="polite" className="py-2">
+          No comments available.
+        </p>
+      )}
+      <ul className="mt-4">
+        {comments.map((comment) => (
+          <li key={comment.id}>
+            <Comment data={comment} />
+          </li>
+        ))}
+      </ul>
+    </section>
   );
 };
 

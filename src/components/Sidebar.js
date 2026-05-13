@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { YOUTUBE_SLIDEBAR_API } from "../utils/constants";
 
 const Sidebar = () => {
   const isMenuOpen = useSelector((store) => store.app.isMenuOpen);
+  const location = useLocation();
 
   const [categories, setCategories] = useState([]);
 
@@ -29,31 +30,53 @@ const Sidebar = () => {
   if (!isMenuOpen) return null;
 
   return (
-    <div className="p-5 shadow-lg col-span-1 w-56 h-screen overflow-y-auto">
+    <nav className="p-5 shadow-lg col-span-1 w-56 h-screen overflow-y-auto" aria-label="Main navigation">
 
       <ul className="space-y-2">
-        <li className="p-2 rounded-lg hover:bg-gray-200">
-          <Link to="/">🏠 Home</Link>
+        <li>
+          <Link 
+            to="/" 
+            className={`block p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 ${
+              location.pathname === '/' ? 'bg-gray-300 font-bold' : 'hover:bg-gray-200'
+            }`}
+            aria-current={location.pathname === '/' ? 'page' : undefined}
+          >
+            🏠 Home
+          </Link>
         </li>
 
-        <li className="p-2 rounded-lg hover:bg-gray-200">🎬 Shorts</li>
-        <li className="p-2 rounded-lg hover:bg-gray-200">📺 Videos</li>
-        <li className="p-2 rounded-lg hover:bg-gray-200">🔴 Live</li>
+        <li>
+          <button className="w-full text-left p-3 rounded-lg hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-500">
+            🎬 Shorts
+          </button>
+        </li>
+        <li>
+          <button className="w-full text-left p-3 rounded-lg hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-500">
+            📺 Videos
+          </button>
+        </li>
+        <li>
+          <button className="w-full text-left p-3 rounded-lg hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-500">
+            🔴 Live
+          </button>
+        </li>
       </ul>
 
-      <h1 className="font-bold pt-6 pb-2">Explore</h1>
+      <h2 className="font-bold pt-6 pb-2">Explore</h2>
 
       <ul className="space-y-2">
         {categories.map((item) => (
-          <li
-            key={item.id}
-            className="p-2 rounded-lg hover:bg-gray-200"
-          >
-            {item.snippet.title}
+          <li key={item.id}>
+            <Link
+              to={`/results?search_query=${encodeURIComponent(item.snippet.title)}`}
+              className="block p-3 rounded-lg hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            >
+              {item.snippet.title}
+            </Link>
           </li>
         ))}
       </ul>
-    </div>
+    </nav>
   );
 };
 
