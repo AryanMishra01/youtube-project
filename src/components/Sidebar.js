@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useSelector } from "react-redux";
 import { Link, useLocation } from "react-router-dom";
 import { YOUTUBE_SLIDEBAR_API } from "../utils/constants";
@@ -8,10 +8,17 @@ const Sidebar = () => {
   const location = useLocation();
 
   const [categories, setCategories] = useState([]);
+  const firstMenuItemRef = useRef(null);
 
   useEffect(() => {
     getCategories();
   }, []);
+
+  useEffect(() => {
+    if (isMenuOpen) {
+      firstMenuItemRef.current?.focus();
+    }
+  }, [isMenuOpen]);
 
   const getCategories = async () => {
     try {
@@ -30,12 +37,13 @@ const Sidebar = () => {
   if (!isMenuOpen) return null;
 
   return (
-    <nav className="p-5 shadow-lg col-span-1 w-56 h-screen overflow-y-auto" aria-label="Main navigation">
+    <nav id="main-navigation" className="p-5 shadow-lg col-span-1 w-56 h-screen overflow-y-auto" aria-label="Main navigation">
 
       <ul className="space-y-2">
         <li>
           <Link 
             to="/" 
+            ref={firstMenuItemRef}
             className={`block p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 ${
               location.pathname === '/' ? 'bg-gray-300 font-bold' : 'hover:bg-gray-200'
             }`}

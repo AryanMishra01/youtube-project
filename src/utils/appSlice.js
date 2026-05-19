@@ -5,7 +5,7 @@ const appSlice = createSlice({
     name: "app",
     initialState: {
         // State to track if the menu is open or closed
-        isMenuOpen: true,
+        isMenuOpen: false,
         selectedVideo: null,
     },
     reducers: {

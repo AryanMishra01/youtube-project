@@ -13,7 +13,7 @@ const ButtonList = ({ onCategorySelect }) => {
     "Comedy",
   ];
   return (
-    <nav aria-label="Video categories">
+    <nav id="video-category-list" aria-label="Video categories">
       <ul className="flex">
         {names.map((value) => (
           <li key={value}>

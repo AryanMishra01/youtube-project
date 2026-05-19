@@ -9,7 +9,9 @@ const Body = () => {
       <Head />
       <div className="grid grid-flow-col">
         <Sidebar />
-        <Outlet />
+        <main id="main-content" className="outline-none">
+          <Outlet />
+        </main>
       </div>
     </div>
   );
